@@ -4,7 +4,7 @@ echo "Starting the buildpack script"
 
 # Invoked as: bin/compile BUILD_DIR CACHE_DIR ENV_DIR
 
-echo "1.."
+echo "a.."
 
 set -e
 
@@ -22,7 +22,7 @@ finished() {
 # Crystal core buildpack:
 ###########################################################
 
-echo "2.."
+echo "b.."
 
 CURL="curl -s -L --retry 15 --retry-delay 2" # retry for up to 30 seconds
 
@@ -39,7 +39,7 @@ ENV_DIR=$3
 export LUCKY_ENV=production
 export SKIP_LUCKY_TASK_PRECOMPILATION=1
 
-echo "3.."
+echo "c.."
 
 if [ -f $BUILD_DIR/.crystal-version ]; then
     CRYSTAL_VERSION=`cat $BUILD_DIR/.crystal-version | tr -d '\012'`
@@ -49,14 +49,14 @@ else
     CRYSTAL_VERSION_REASON='buildpack is now ignoring crysta-version, hard coding CV'
 fi
 
-echo "4.."
+echo "d.."
 
 TAG_NAME=`${CURL} https://api.github.com/repos/crystal-lang/crystal/releases | json_value tag_name | grep ${CRYSTAL_VERSION}`
 CRYSTAL_URL=`${CURL} https://api.github.com/repos/crystal-lang/crystal/releases/tags/${TAG_NAME} | grep 'https://github.com/crystal-lang/crystal/releases/download/.*-linux-x86_64.tar.gz' | sed 's/.*: "\(.*\)"/\1/'`
 CRYSTAL_DIR=$BUILD_DIR/.heroku/crystal
 unset GIT_DIR
 
-echo "5.."
+echo "e.."
 
 # Install Crystal
 mkdir -p $ENV_DIR
@@ -71,7 +71,7 @@ finished
 PATH="${PATH}:${CRYSTAL_DIR}/bin:${CRYSTAL_DIR}/embedded/bin/"
 echo "export PATH=\$HOME/.heroku/crystal/bin:\$PATH" >> "$BUILD_DIR/.profile.d/crystal_environment.sh"
 
-echo "6.."
+echo "f.."
 
 ###########################################################
 # End of Crystal core buildpack
