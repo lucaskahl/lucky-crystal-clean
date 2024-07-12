@@ -1,6 +1,10 @@
 #!/bin/bash -e
 
+echo "Starting the buildpack script"
+
 # Invoked as: bin/compile BUILD_DIR CACHE_DIR ENV_DIR
+
+echo "1.."
 
 set -e
 
@@ -18,6 +22,8 @@ finished() {
 # Crystal core buildpack:
 ###########################################################
 
+echo "2.."
+
 CURL="curl -s -L --retry 15 --retry-delay 2" # retry for up to 30 seconds
 
 function json_value() {
@@ -32,6 +38,8 @@ ENV_DIR=$3
 
 export LUCKY_ENV=production
 export SKIP_LUCKY_TASK_PRECOMPILATION=1
+
+echo "3.."
 
 if [ -f $BUILD_DIR/.crystal-version ]; then
     CRYSTAL_VERSION=`cat $BUILD_DIR/.crystal-version | tr -d '\012'`
