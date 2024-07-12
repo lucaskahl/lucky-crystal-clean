@@ -52,9 +52,16 @@ fi
 echo "d.."
 
 TAG_NAME=`${CURL} https://api.github.com/repos/crystal-lang/crystal/releases | json_value tag_name | grep ${CRYSTAL_VERSION}`
+echo "TAG_NAME: $TAG_NAME"
+
 CRYSTAL_URL=`${CURL} https://api.github.com/repos/crystal-lang/crystal/releases/tags/${TAG_NAME} | grep 'https://github.com/crystal-lang/crystal/releases/download/.*-linux-x86_64.tar.gz' | sed 's/.*: "\(.*\)"/\1/'`
+echo "CRYSTAL_URL: $CRYSTAL_URL"
+
 CRYSTAL_DIR=$BUILD_DIR/.heroku/crystal
+echo "CRYSTAL_DIR: $CRYSTAL_DIR"
+
 unset GIT_DIR
+echo "GIT_DIR unset"
 
 echo "e.."
 
