@@ -49,10 +49,14 @@ else
     CRYSTAL_VERSION_REASON='buildpack is now ignoring crysta-version, hard coding CV'
 fi
 
+echo "4.."
+
 TAG_NAME=`${CURL} https://api.github.com/repos/crystal-lang/crystal/releases | json_value tag_name | grep ${CRYSTAL_VERSION}`
 CRYSTAL_URL=`${CURL} https://api.github.com/repos/crystal-lang/crystal/releases/tags/${TAG_NAME} | grep 'https://github.com/crystal-lang/crystal/releases/download/.*-linux-x86_64.tar.gz' | sed 's/.*: "\(.*\)"/\1/'`
 CRYSTAL_DIR=$BUILD_DIR/.heroku/crystal
 unset GIT_DIR
+
+echo "5.."
 
 # Install Crystal
 mkdir -p $ENV_DIR
@@ -67,9 +71,13 @@ finished
 PATH="${PATH}:${CRYSTAL_DIR}/bin:${CRYSTAL_DIR}/embedded/bin/"
 echo "export PATH=\$HOME/.heroku/crystal/bin:\$PATH" >> "$BUILD_DIR/.profile.d/crystal_environment.sh"
 
+echo "6.."
+
 ###########################################################
 # End of Crystal core buildpack
 ###########################################################
+
+echo "7.."
 
 cd "$BUILD_DIR"
 
@@ -84,9 +92,13 @@ else
     shards build --production --release --ignore-crystal-version
 fi
 
+echo "8.."
+
 echo "Installing Lucky tasks"
 start "Setting up Lucky tasks"
 crystal build tasks.cr -o "$BUILD_DIR/.heroku/lucky/lucky" --release --progress --no-debug
+
+echo "9.."
 
 echo "export PATH=\$PATH:\$HOME/.heroku/lucky" >> "$BUILD_DIR/.profile.d/lucky_environment.sh"
 
