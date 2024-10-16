@@ -45,7 +45,7 @@ if [ -f $BUILD_DIR/.crystal-version ]; then
     CRYSTAL_VERSION=`cat $BUILD_DIR/.crystal-version | tr -d '\012'`
     CRYSTAL_VERSION_REASON='due to .crystal-version file'
 else
-    CRYSTAL_VERSION="1.2.2"
+    CRYSTAL_VERSION="1.13.3"
     CRYSTAL_VERSION_REASON='buildpack is now ignoring crysta-version, hard coding CV'
 fi
 
