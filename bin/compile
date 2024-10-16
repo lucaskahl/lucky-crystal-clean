@@ -45,7 +45,7 @@ if [ -f $BUILD_DIR/.crystal-version ]; then
     CRYSTAL_VERSION=`cat $BUILD_DIR/.crystal-version | tr -d '\012'`
     CRYSTAL_VERSION_REASON='due to .crystal-version file'
 else
-    CRYSTAL_VERSION="1.13.3"
+    CRYSTAL_VERSION="1.2.2"
     CRYSTAL_VERSION_REASON='buildpack is now ignoring crysta-version, hard coding CV'
 fi
 
@@ -54,7 +54,7 @@ echo "$CRYSTAL_VERSION"
 echo "CRYSTAL_VERSION_REASON"
 
 echo "starting TAGNAME"
-TAG_NAME=`${CURL} https://api.github.com/repos/crystal-lang/crystal/releases | json_value tag_name | grep ${CRYSTAL_VERSION}`
+TAG_NAME=`${CURL} https://api.github.com/repos/crystal-lang/crystal/releases?page=2 | json_value tag_name | grep ${CRYSTAL_VERSION}`
 echo "TAG_NAME: $TAG_NAME"
 
 echo "starting CRYSTAL_URL"
